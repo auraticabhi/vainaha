@@ -733,7 +733,7 @@ useEffect(() => {
               }
             </div>:<div>
               {
-                postType=='savedEvents'?<div className="grid lg:grid-cols-4 grid-cols-1 gap-4 pb-4">
+                postType=='savedEvents'?<div className="grid lg:grid-cols-4 grid-cols-1 gap-[7rem] pb-4">
                 { savedEvents.length !== 0 ? (
       savedEvents.map((post, index) => (
         <div key={index} className="mb-1">
