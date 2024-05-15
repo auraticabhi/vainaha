@@ -537,7 +537,7 @@ const clearNotifications = async () => {
         {/* logo */}
         <div className=" flex gap-[1rem]">
           <Link href="/events" className="flex gap-2 items-center">
-            <p className="hidden text-zinc-700 dark:text-emerald-100 text-xl font-bold md:block mr-[4rem]">
+            <p className="hidden text-zinc-700 dark:text-emerald-100 text-xl font-bold md:block mr-[2rem]">
               <Image src={logo} alt="logo" width={162} height={62} />
             </p>
           </Link>
@@ -568,14 +568,16 @@ const clearNotifications = async () => {
             value={eventSearchText}
             onChange={handleEventSearchText}
             placeholder="Search Events" 
-            className="lg:w-[37rem] w-[22rem] text-sm border border-gray-300 rounded-2xl p-2 pl-8" 
+            className="peer cursor-pointer relative z-10 h-10 w-10 rounded-full border-[2px] bg-transparent border-[#ffffff] pl-12 outline-none focus:w-[39rem] focus:cursor-text focus:border-[#ffffff] focus:pl-[3rem] focus:pr-4 transition-all" 
             onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   dispatch(triggerEventSearch());
                 }
             }}
           />
-          <Search className=" absolute left-2 top-1/2 transform text-gray-400 -translate-y-1/2 h-4 w-4" />
+          <svg xmlns="http://www.w3.org/2000/svg" className="absolute inset-y-0 my-auto h-14 w-12 border-transparent stroke-[#ffffff] px-3.5 peer-focus:border-[#ffffff] peer-focus:stroke-[#ffffff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
         </div>
         }
 
