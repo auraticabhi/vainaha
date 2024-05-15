@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { Bookmark, PlusCircleIcon } from "lucide-react"
-import FImage from "../../../public/flowers-7455009_1280.jpg"
+import FImage from "../../../public/placeholder.jpg"
 
 import parse from "html-react-parser";
 

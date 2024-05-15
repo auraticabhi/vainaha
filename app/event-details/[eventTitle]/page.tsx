@@ -51,6 +51,7 @@ import imageCompression from 'browser-image-compression';
 import { get } from 'http';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import EventCommentPost from '@/components/eventDetailsPage/eventCommentPost';
+import Emage from "../../../public/placeholder.jpg"
 
 
 
@@ -331,7 +332,7 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
                     eventObject.eventImageURL ? 
                     <Image src={eventObject.eventImageURL} width={1920} height={1080} alt='Conference' />
                     :
-                    <Image src='https://img.evbuc.com/https%3A%2F%2Fcdn.evbuc.com%2Fimages%2F723807029%2F1879204942643%2F1%2Foriginal.20240320-051010?w=940&auto=format%2Ccompress&q=75&sharp=10&s=5758072329789ed48407ed8022bcbe72' width={1920} height={1080} alt='Conference' />
+                    <Image src={Emage} width={1920} height={1080} alt='Conference' />
 
                   }
                 </div>
