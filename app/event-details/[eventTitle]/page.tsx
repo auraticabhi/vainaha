@@ -67,7 +67,7 @@ type EventDetailsType = {
   title: string
   description: string
   eventImageURL: string
-  dateOfEvent: Timestamp
+  dateOfEvent: any
   locationOfEvent: string
   durationOfEvent: number
   registrationLink: string
@@ -78,9 +78,9 @@ type EventDetailsType = {
   profilePic: string
   sponsors: Array<string>
 
-  preConferenceDate: Timestamp
-  registrationStartDate: Timestamp
-  registrationEndDate: Timestamp
+  preConferenceDate: any
+  registrationStartDate: any
+  registrationEndDate: any
   earlyBirdRegistrationFee: number
   lateRegistrationFee: number
   creditPoints: number
@@ -197,8 +197,9 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
 
   let dateString;
   if (eventObject.dateOfEvent) {
-  const date = eventObject.dateOfEvent.toDate();
-  dateString = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  //const date = eventObject.dateOfEvent.toDate();
+  //dateString = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  dateString = eventObject.dateOfEvent;
   }
 
 
@@ -439,15 +440,15 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
     <tbody>
       <tr>
         <td className='border text-[17px] border-[#d3d3d3]'>Pre-Conference Date :</td>
-        <td className='text-blue-400 text-[17px] underline cursor-pointer border border-[#d3d3d3]'>{eventObject.preConferenceDate && eventObject.preConferenceDate.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
-      </tr>
+        <td className='text-blue-400 text-[17px] underline cursor-pointer border border-[#d3d3d3]'>{eventObject.preConferenceDate}</td>
+        </tr> {/*   eventObject.preConferenceDate.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) */}
       <tr>
         <td className='border text-[17px] border-[#d3d3d3]'>Registration Start Date :</td>
-        <td className='text-blue-400 text-[17px] underline cursor-pointer border border-[#d3d3d3]'>{eventObject.registrationStartDate && eventObject.registrationStartDate.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
+        <td className='text-blue-400 text-[17px] underline cursor-pointer border border-[#d3d3d3]'>{eventObject.registrationStartDate}</td>
       </tr>
       <tr>
         <td className='border text-[17px] border-[#d3d3d3]'>Registration End Date :</td>
-        <td className='text-blue-400 text-[17px] underline cursor-pointer border border-[#d3d3d3]'>{eventObject.registrationEndDate && eventObject.registrationEndDate.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
+        <td className='text-blue-400 text-[17px] underline cursor-pointer border border-[#d3d3d3]'>{eventObject.registrationEndDate}</td>
       </tr>
       <tr>
         <td className='border text-[17px] border-[#d3d3d3]'>Early Bird Registration Fee :</td>
