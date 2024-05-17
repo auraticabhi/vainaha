@@ -20,7 +20,7 @@ import {
   signInAnonymously,
 } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import logo from "../../public/logo.png"
+import logo from "../../public/Vainaha_logo_825x268.png"
 
 import { Button } from "@/components/ui/button";
 import {
@@ -199,7 +199,7 @@ const LoginPage = (props: Props) => {
           <div className="relative bg-[#F8FAFC] rounded-lg ">
             <div className="px-4 py-9 md:py-0">
               <div className="text-center">
-                <p className="mb-4 text-2xl font-semibold leading-5 text-slate-900 flex justify-center">
+                <p className="mb-4 text-[2rem] font-semibold leading-5 text-slate-900 flex justify-center">
                 <Image src={logo} alt="logo" width={160} height={60} />
                 </p>
                 <p className="mt-2 text-sm leading-4 text-slate-600">
@@ -228,7 +228,7 @@ const LoginPage = (props: Props) => {
                     Continue with Google
                   </button>
 
-                  <button
+                  {/* <button
                     className="inline-flex h-10 w-full items-center justify-center gap-2 rounded border hover:bg-gray-100 border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60"
                     onClick={signInWithFacebook}
                   >
@@ -240,7 +240,7 @@ const LoginPage = (props: Props) => {
                       className="h-[18px] w-[18px] "
                     />
                     Continue with Facebook
-                  </button>
+                  </button> */}
 
                       <button
                         className="inline-flex h-10 w-full items-center justify-center gap-2 rounded border hover:bg-gray-100 border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60"

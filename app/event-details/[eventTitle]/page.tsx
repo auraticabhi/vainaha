@@ -51,7 +51,7 @@ import imageCompression from 'browser-image-compression';
 import { get } from 'http';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import EventCommentPost from '@/components/eventDetailsPage/eventCommentPost';
-import Emage from "../../../public/placeholder.jpg"
+import Emage from "../../../public/alexandre-pellaes-6vAjp0pscX0-unsplash.jpg"
 
 
 
@@ -339,7 +339,7 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
                 </div>
                 <div className=' max-w-[70%]'>
                     <div className='p-4 space-y-7'>
-                        <h1 className='text-[30px] font-[500]'>{eventObject.title}</h1>
+                        <h1 className='text-[30px] font-[500] capitalize'>{eventObject.title}</h1>
                     </div>
                 </div>
             </div>

@@ -92,7 +92,7 @@ import { useToast } from "./ui/use-toast";
 import { Separator } from "./ui/separator";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./ui/select";
 import { LuXCircle } from "react-icons/lu";
-import logo from '../public/newvainaha.png'
+import logo from '../public/Vainaha_logo_825x268 (1).png'
 
 type Input = z.infer<typeof QuestionType>;
 
@@ -344,6 +344,8 @@ const Navbar = ({}: Props) => {
 
   const [name, setName] = useState<string>(user?.displayName||"Loading...");
 
+  const [srchIcon, setSrchIcon] = useState(true);
+
   useEffect(() => {
     const fetchUserData = async () => {
       if (user?.uid) {
@@ -500,7 +502,6 @@ const clearNotifications = async () => {
     return null;
   }
 
-  
     
 
 
@@ -535,14 +536,15 @@ const clearNotifications = async () => {
 
       <div className=" sm:block hidden container max-w-7xl h-[3rem] mx-auto md:flex items-center justify-between ">
         {/* logo */}
-        <div className=" flex gap-[1rem]">
+        <div className="">
           <Link href="/events" className="flex gap-2 items-center">
-            <p className="hidden text-zinc-700 dark:text-emerald-100 text-xl font-bold md:block mr-[2rem]">
+            <p className="hidden text-zinc-700 dark:text-emerald-100 text-xl font-bold md:block">
               <Image src={logo} alt="logo" width={162} height={62} />
             </p>
           </Link>
-
+        </div>
           {/* search bar */}
+        <div>  
         { !hideQueSearch && <div className=" relative ml-[18.1px] ">
           {/* <Input className=" pl-10 w-[40rem]" placeholder="Search" /> */}
           <input type="text" 
@@ -562,27 +564,26 @@ const clearNotifications = async () => {
 
         {/* ye upar wala que search ka input tha , ab neeche event search ka input bana rhe */}
 
-        { hideQueSearch && <div className=" relative ml-5">
+        { hideQueSearch && <div className=" relative">
           {/* <Input className=" pl-10 w-[40rem]" placeholder="Search" /> */}
           <input type="text" 
             value={eventSearchText}
             onChange={handleEventSearchText}
             placeholder="Search Events" 
-            className="peer cursor-pointer relative z-10 h-10 w-10 rounded-full border-[2px] bg-transparent border-[#ffffff] pl-12 outline-none focus:w-[39rem] focus:cursor-text focus:border-[#ffffff] focus:pl-[3rem] focus:pr-4 transition-all" 
+            className="peer cursor-pointer relative z-10 h-10 w-10 text-white pl-12 rounded-full border-[2px] bg-transparent border-[#ffffff] outline-none focus:w-[37rem] ml-[49rem] focus:ml-[0rem] focus:cursor-text focus:border-[#ffffff] transition-all" 
             onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   dispatch(triggerEventSearch());
                 }
             }}
           />
-          <svg xmlns="http://www.w3.org/2000/svg" className="absolute inset-y-0 my-auto h-14 w-12 border-transparent stroke-[#ffffff] px-3.5 peer-focus:border-[#ffffff] peer-focus:stroke-[#ffffff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <svg xmlns="http://www.w3.org/2000/svg" className={`absolute inset-y-0 my-auto ml-[49rem] transition-all h-14 w-12 border-transparent stroke-[#ffffff] px-3.5 peer-focus:ml-[0rem] peer-focus:border-[#ffffff] peer-focus:stroke-[#ffffff]`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
         </div>
         }
-
-
         </div>
+
 
         <div className="flex ">
         <div className="hidden lg:inline">
@@ -665,7 +666,7 @@ const clearNotifications = async () => {
                   referrerPolicy="no-referrer"
                 />
               </div>
-              <AvatarFallback>SP</AvatarFallback>
+              {/* <AvatarFallback>SP</AvatarFallback> */}
             </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
@@ -715,7 +716,7 @@ const clearNotifications = async () => {
             </div>
           ) : (
             <Link href="/auth">
-              <Button variant="default" className=" rounded-3xl">Sign In</Button>
+              <Button variant="default" className=" rounded-3xl">Login</Button>
             </Link>
           )}
           

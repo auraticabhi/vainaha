@@ -809,7 +809,7 @@ export default function MusicPage() {
                       <div>
                       <Link
                       className="hidden lg:inline"
-                    href={"mailto:abhijeetgupta989@gmail.com"}
+                    href={"mailto:sachinkg25@gmail.com"}
                     >
                         <Button className=" mr-2 bg-transparent border text-[15px] border-black text-black rounded-2xl hover:bg-gray-300">
                           <MailIcon className="mr-2 h-4 w-4" />

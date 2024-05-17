@@ -215,7 +215,7 @@ export function AlbumArtwork({ post, isProfile = false, handleDelete = () => {} 
       </ContextMenu>
       <div className="mt-3 text-sm">
       <Link href={`/event-details/${encodeURIComponent(post?.title?.split(" ").join("-"))}`}>
-        <h3 className="text-[18px] font-[500] leading-none">{post.title.length>35?post.title.substring(0, 34)+"...":post.title}</h3>
+        <h3 className="text-[18px] font-[500] leading-none capitalize">{post.title.length>35?post.title.substring(0, 34)+"...":post.title}</h3>
       </Link>  
       {/* <div className="mt-[0.30rem] text-[14px] font-semibold opacity-85">{post.locationOfEvent}</div> */}
       <div className="hidden lg:block">
