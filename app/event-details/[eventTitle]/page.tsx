@@ -323,10 +323,10 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
 
 
   return (
-    <div className=' grid md:grid-cols-2 lg:grid-cols-9 gap-y-4 md:gap-x-6 pb-6 font-jakarta mt-3'>
+    <div className='lg:grid md:grid-cols-2 lg:grid-cols-9 gap-y-4 md:gap-x-6 pb-6 font-jakarta mt-3'>
         <div className=' md:col-span-6 col-span-2 order-first  '>
 
-          <div className=' w-full  bg-white dark:bg-[#262626] rounded-2xl shadow-[0px_0px_0px_1px_rgba(8,112,184,0.06),0px_1px_1px_-0.5px_rgba(8,112,184,0.06),0px_3px_3px_-1.5px_rgba(8,112,184,0.06),_0px_6px_6px_-3px_rgba(8,112,184,0.06),0px_12px_12px_-6px_rgba(8,112,184,0.06),0px_24px_24px_-12px_rgba(8,112,184,0.06) break-words overflow-hidden lg:mt-[4rem] font-dmsans p-10'>
+          <div className='w-full  bg-white dark:bg-[#262626] rounded-2xl shadow-[0px_0px_0px_1px_rgba(8,112,184,0.06),0px_1px_1px_-0.5px_rgba(8,112,184,0.06),0px_3px_3px_-1.5px_rgba(8,112,184,0.06),_0px_6px_6px_-3px_rgba(8,112,184,0.06),0px_12px_12px_-6px_rgba(8,112,184,0.06),0px_24px_24px_-12px_rgba(8,112,184,0.06) break-words overflow-hidden lg:mt-[4rem] font-dmsans p-10'>
             <div className=''>
                 <div className=''>
                   {
@@ -337,7 +337,7 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
 
                   }
                 </div>
-                <div className=' max-w-[70%]'>
+                <div className='max-w-[70%]'>
                     <div className='p-4 space-y-7'>
                         <h1 className='text-[25px] font-[600] font-jakarta text-[#311b92]'>{eventObject.title}</h1>
                     </div>
@@ -414,8 +414,9 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
             </div>
 
             <div className='p-4 mt-5'>
-              <div className=' flex gap-4 border border-black rounded-2xl bg-gray-300 p-2'>
+              <div className=' lg:flex gap-4 border border-black rounded-2xl bg-gray-300 p-2'>
                 <div className=' text-[20px] font-[500]'>Registration Link :</div>
+    
                 <a target='_blank' href="#" className=' text-blue-400 underline cursor-pointer text-[20px]'>{eventObject.registrationLink}</a>
               </div>
             </div>
@@ -489,7 +490,7 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
 
             <div className="h-fit">
 
-        <div className='lg:hidden col-span-3 sticky overflow-hidden h-fit rounded-2xl border border-gray-300 shadow-[0px_0px_0px_1px_rgba(8,112,184,0.06),0px_1px_1px_-0.5px_rgba(8,112,184,0.06),0px_3px_3px_-1.5px_rgba(8,112,184,0.06),_0px_6px_6px_-3px_rgba(8,112,184,0.06),0px_12px_12px_-6px_rgba(8,112,184,0.06),0px_24px_24px_-12px_rgba(8,112,184,0.06)]'>
+        <div className='lg:hidden col-span-3 sticky mt-3 overflow-hidden h-fit rounded-2xl border border-gray-300 shadow-[0px_0px_0px_1px_rgba(8,112,184,0.06),0px_1px_1px_-0.5px_rgba(8,112,184,0.06),0px_3px_3px_-1.5px_rgba(8,112,184,0.06),_0px_6px_6px_-3px_rgba(8,112,184,0.06),0px_12px_12px_-6px_rgba(8,112,184,0.06),0px_24px_24px_-12px_rgba(8,112,184,0.06)]'>
         <Card x-chunk="dashboard-01-chunk-5">
             <CardHeader>
               <CardTitle className='text-[24px] font-[500]'>Created By</CardTitle>
@@ -500,7 +501,7 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
             <div className="flex mb-1">
               <div>
             <Image
-                        src={userData.profilePic}
+                        src={userData.profilePic?userData.profilePic:PImage}
                         width={250}
                         height={250}
                         alt='Conference'
@@ -508,8 +509,8 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
                         />
             </div>  
           <div className="ml-4 space-y-1">
-          <p className="text-[17px] font-medium leading-none">{userData.name}</p>
-            <p className="text-[17px] text-muted-foreground">{userData.email}</p>
+          <p className="text-[17px] font-medium leading-none">{userData.name?userData.name:"Guest"}</p>
+            <p className="text-[17px] text-muted-foreground">{userData.email?userData.email:"na"}</p>
           </div>
           <div className="ml-auto font-medium"></div>
         </div>
