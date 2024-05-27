@@ -56,7 +56,7 @@ export default function RootLayout({
         <body className={cn(GeistSans.className, `antialiased min-h-screen pt-12 bg-[#F1F2F2] dark:bg-[#181818] ${dmSans_init.variable}`)}>
           <Providers>
             <Navbar />
-            <div className="h-full pt-4 ">
+            <div className="h-full pt-4 font-jakarta">
             {children}
             </div>
             <Toaster />

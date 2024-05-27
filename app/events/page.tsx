@@ -2,7 +2,7 @@
 
 import { Metadata } from "next"
 import Image from "next/image"
-import { MailIcon, PlusCircleIcon } from "lucide-react"
+import { Layers3, MailIcon, MapPin, PlusCircleIcon } from "lucide-react"
 import { X } from 'lucide-react';
 
 import { ScrollArea, ScrollBar } from "../../components/ui/scroll-area"
@@ -18,6 +18,7 @@ import { AlbumArtwork } from "./components/album-artwork"
 import { listenNowAlbums, madeForYouAlbums } from "./data/albums"
 import { playlists } from "./data/playlists"
 import { Sidebar } from "./components/sidebar"
+import BImage from "../../public/richard-horvath-cPccYbPrF-A-unsplash.jpg"
 
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { postData } from "@/lib/data";
@@ -100,7 +101,7 @@ import { Tiptap } from "@/components/TipTapAns";
 import algoliasearch from "algoliasearch/lite";
 import { useSelector , useDispatch } from "react-redux";
 import { RootState } from "@/store/store";
-import { triggerEventSearch } from "@/store/slice";
+import { setEventSearchText, triggerEventSearch } from "@/store/slice";
 
 
 import { EventType } from "@/schemas/event";
@@ -193,6 +194,11 @@ export default function MusicPage() {
   const [sponsorInput , setSponsorInput] = useState<string>("");
 
   const [eventModeChange, setEventModeChange] = useState<string>("Webinar");
+  const searchTextI = useSelector((state: RootState) => state.eventSearch.searchText);
+  const handleEventSearchText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    dispatch(setEventSearchText(e.target.value));
+  }
 
    //old homepage stuff
    const [posts, setPosts] = useState<EventType[]>([]);
@@ -774,510 +780,182 @@ export default function MusicPage() {
     }
   }
 
-  
-   
+  const [sidebarCategory, setSidebarCategory] = useState<any>([]);
 
+  const handleLocationChange = (event:any)=>{
+    const value = event.target.value;
+    setLocation(value); 
+  }
+
+  const handleChangeCat = (event:any)=>{
+    const value = event.target.value;
+    handleSelectChange(value);
+  }
+
+  useEffect(()=>{
+    const getCat=async()=>{
+      try {
+        const eventCategoriesRef = collection(db, 'meta-data', 'v1', 'event-categories');
+        const snapshot = await getDocs(eventCategoriesRef);
+    
+        const eventCategories:any = [];
+        snapshot.forEach(doc => {
+          eventCategories.push({ id: doc.id, ...doc.data() });
+        });
+    
+        return eventCategories;
+      } catch (error) {
+        console.error('Error fetching event categories:', error);
+        return [];
+      }
+  }
+  const category = getCat().then(categories => {
+    setSidebarCategory(categories);
+  }).catch(error => {
+    console.error('Error:', error);
+  });
+  }, [])
+
+  const [location, setLocation] = useState("all");
+  const locations:any = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba","Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia","Bosnia &amp; Herzegovina","Botswana","Brazil","British Virgin Islands","Brunei","Bulgaria","Burkina Faso","Burundi","Cambodia","Cameroon","Cape Verde","Cayman Islands","Chad","Chile","China","Colombia","Congo","Cook Islands","Costa Rica","Cote D Ivoire","Croatia","Cruise Ship","Cuba","Cyprus","Czech Republic","Denmark","Djibouti","Dominica","Dominican Republic","Ecuador","Egypt","El Salvador","Equatorial Guinea","Estonia","Ethiopia","Falkland Islands","Faroe Islands","Fiji","Finland","France","French Polynesia","French West Indies","Gabon","Gambia","Georgia","Germany","Ghana","Gibraltar","Greece","Greenland","Grenada","Guam","Guatemala","Guernsey","Guinea","Guinea Bissau","Guyana","Haiti","Honduras","Hong Kong","Hungary","Iceland","India","Indonesia","Iran","Iraq","Ireland","Isle of Man","Israel","Italy","Jamaica","Japan","Jersey","Jordan","Kazakhstan","Kenya","Kuwait","Kyrgyz Republic","Laos","Latvia","Lebanon","Lesotho","Liberia","Libya","Liechtenstein","Lithuania","Luxembourg","Macau","Macedonia","Madagascar","Malawi","Malaysia","Maldives","Mali","Malta","Mauritania","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro","Montserrat","Morocco","Mozambique","Namibia","Nepal","Netherlands","Netherlands Antilles","New Caledonia","New Zealand","Nicaragua","Niger","Nigeria","Norway","Oman","Pakistan","Palestine","Panama","Papua New Guinea","Paraguay","Peru","Philippines","Poland","Portugal","Puerto Rico","Qatar","Reunion","Romania","Russia","Rwanda","Saint Pierre &amp; Miquelon","Samoa","San Marino","Satellite","Saudi Arabia","Senegal","Serbia","Seychelles","Sierra Leone","Singapore","Slovakia","Slovenia","South Africa","South Korea","Spain","Sri Lanka","St Kitts &amp; Nevis","St Lucia","St Vincent","St. Lucia","Sudan","Suriname","Swaziland","Sweden","Switzerland","Syria","Taiwan","Tajikistan","Tanzania","Thailand","Timor L'Este","Togo","Tonga","Trinidad &amp; Tobago","Tunisia","Turkey","Turkmenistan","Turks &amp; Caicos","Uganda","Ukraine","United Arab Emirates","United Kingdom","Uruguay","Uzbekistan","Venezuela","Vietnam","Virgin Islands (US)","Yemen","Zambia","Zimbabwe"];
+   
   return (
     <>
-      <div className="lg:container lg:max-w-[93.5rem] lg:mx-auto font-dmsans mt-3">
-        <div className="flex justify-center">
-          <div className="lg:w-[20.5rem]">
-        <Sidebar playlists={playlists} selectChange={handleSelectChange} currentC={selectedCategory||"all"} className="hidden lg:block bg-[#ffffff] mr-4 rounded-2xl" />
-        </div>
-          <div className="bg-background rounded-2xl mb-2 pl-[8px] shadow-[0px_0px_0px_1px_rgba(8,112,184,0.06),0px_1px_1px_-0.5px_rgba(8,112,184,0.06),0px_3px_3px_-1.5px_rgba(8,112,184,0.06),_0px_6px_6px_-3px_rgba(8,112,184,0.06),0px_12px_12px_-6px_rgba(8,112,184,0.06),0px_24px_24px_-12px_rgba(8,112,184,0.06)]">
-            <div className="">
-              <div className="">
-                <div className="px-2 py-6 md:w-[1100px] block">
-                  <Tabs defaultValue="Webinar" className="h-full space-y-6">
-                    <div className="space-between flex items-center">
-                      <TabsList>
-                        <TabsTrigger value="Webinar" className="relative text-[15px] font-[500]" onClick={()=>{
-                          setPosts([]);
-                          setEventModeChange("Webinar");
-                        }}>
-                          Webinar
-                        </TabsTrigger>
-                        {/* <TabsTrigger value="podcasts">Podcasts</TabsTrigger> */}
-                        <TabsTrigger value="Offline" className="text-[15px] font-[500]" onClick={()=>{
-                          setPosts([]);
-                          setEventModeChange("Offline");
-                        }}>
-                          Offline
-                        </TabsTrigger>
-                      </TabsList>
-                      <div className="ml-auto lg:mr-4">
-                      <div>
-                      <Link
-                      className="hidden lg:inline"
-                    href={"mailto:sachinkg25@gmail.com"}
-                    >
-                        <Button className=" mr-2 bg-transparent border text-[15px] border-black text-black rounded-2xl hover:bg-gray-300">
-                          <MailIcon className="mr-2 h-4 w-4" />
-                          Mail To
-                        </Button>
-                      </Link>
-              <Dialog>
-                {
-                  
-                  // <DialogTrigger asChild>
-                    <Link
-                    href={'/events/createEvent'}
-                    >
-                        <Button className=" bg-transparent border border-black rounded-2xl text-[15px] text-black hover:bg-gray-300">
-                          <FaCirclePlus className="hidden lg:block mr-2 h-4 w-4" />
-                          Create Event
-                        </Button>
-                      </Link>
-                  // </DialogTrigger>
-  }
-                  <DialogContent className="sm:max-w-[930px] max-h-[42rem] overflow-y-scroll ">
-                    <DialogHeader>
-                      <DialogTitle>Create your Event</DialogTitle>
-                      <DialogDescription>
-                        Create your Event here. Click submit when you are done.
-                      </DialogDescription>
-                    </DialogHeader>
-                      {/* <Tiptap /> */}
-                     {/* <Textarea className="w-full min-h-[500px]" placeholder="What's your question?" /> */}
-
-                      <div className=" border border-gray-300 rounded-3xl p-4 cursor-pointer">
-                      <Form {...form}>
-                        <form
-                        className="relative space-y-3 "
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        >
-
-                          {/* Title */}
-                          <FormField
-                          control={form.control}
-                          name="title"
-                          render = {({field}) => (
-                            <FormItem>
-                              <FormLabel>Title</FormLabel>
-                              <FormControl>
-                                <Input className="" placeholder="Title for the Event ..." {...field}/>
-                              </FormControl>
-                              <div className="text-[12px] opacity-70">This is the title, write your question here.</div>
-                              <FormMessage/>
-                            </FormItem>
-                          )}
-                          />
-
-                          {/* EventImage */}
-                          <FormField
-                          control={form.control}
-                          name="eventImageURL"
-                          render = {({field}) => (
-                            <FormItem>
-                              <FormLabel>Event Image</FormLabel>
-                              <FormControl>
-                                
-                                <Input
-                                type="file"
-                                onChange={handleImageFileSelect}
-
-                                />
-                              </FormControl>
-                              <div className="text-[12px] opacity-70">Upload an image for the Event.</div>
-                              <FormMessage/> 
-                            </FormItem>
-                          )}
-                          />
-
-                          {/* TipTap Editor */}
-                          <FormField
-                            control={form.control}
-                            name="description"
-                            render = {({field}) => (
-                              <FormItem>
-                                <FormLabel>Description</FormLabel>
-                                <div className={`${isFocused?"border-black border-[2.1px]": "border-[1.2px]"} rounded-lg`} onFocus={() => setIsFocused(true)}
-                                  onBlur={() => setIsFocused(false)}
-                                  >
-                                <FormControl>
-                                  <Controller
-                                    control={form.control}
-                                    name="description"
-                                    render={({ field }) => (
-                                      <Tiptap {...field} setImageUpload={setImageUpload} uploadImage={uploadImage} progress={progress} />
-                                    )}
-                                   /> 
-                                </FormControl>
-                                </div>
-                                <div className="text-[12px] opacity-70">This is the description, give more details about your question here.</div>
-                                <FormMessage/>
-                              </FormItem>
-                            )}
-                          />
-                          
-                          {(progress||0)>0&&<span className='pt-3'>{`${Math.ceil((progress||0))} % Uploaded`}</span>}
-                          {/* "0" to make upload percentage invisible when no image is selected */}
-                          {/* anonymity toggle */}
-                          <div>
-                            {
-                              previewImg&&<div className="w-full flex items-center justify-center">
-                                <Image src={previewImg} alt="previewImage" width={250} height={250}/>
-                              </div>
-                            }
-                          </div>
-                          {/*Category thing*/}
-                          <div>
-                          
-                          <div className="text-sm font-medium mb-2">Category</div>
-                          <Select value={""} onValueChange={handleMainCategoryChange} >
-                            <SelectTrigger className="w-full">
-                              <SelectValue placeholder="Select a Category" />
-                            </SelectTrigger>
-                            <SelectContent>
-                              <SelectGroup>
-                                <SelectLabel>Categories</SelectLabel>
-                                <SelectItem value="How To">How To</SelectItem>
-                                <SelectItem value="Help">Help</SelectItem>
-                                <SelectItem value="Mystery|Haunted|Ghost">Mystery/Haunted/Ghost</SelectItem>
-                                <SelectItem value="Astrology|Remedies|Occult">Astrology/Remedies/Occult</SelectItem>
-                                <SelectItem value="GemStones|Rudraksha">GemStones/Rudraksha</SelectItem>
-                                <SelectItem value="Others">Others</SelectItem>
-                              </SelectGroup>
-                            </SelectContent>
-                          </Select>
-                          <div className="flex">
-                              {
-                                selectC.map((category:string, index:number)=>{
-                                  return <span className='bg-slate-300 text-slate-800 rounded-xl p-1 text-sm flex mr-1 mt-3' key={index}>{category.split("|").join("/")} <span onClick={()=>{delCategories(category)}} className="mt-[0.27rem] ml-1 cursor-pointer text-slate-800 hover:text-slate-900"><LuXCircle /></span></span>
-                                })
-                              }
-                            </div>
-                            {/* Ls */}
-                            <div className="mt-3">
-                            {selectedMainCategory && (
-                              <Select value={""} onValueChange={handleSubcategoryChange}>
-                                <SelectTrigger>
-                                <SelectValue placeholder={`Select subCategory for ${selectedMainCategory.split("|").join("/")}`} />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectGroup>
-                                  <SelectLabel>Sub Categories</SelectLabel>
-                                    {
-                                      subCategoryy.map((subcategory:any, index:any)=>(
-                                        <SelectItem key={index} value={subcategory}>{subcategory}</SelectItem>
-                                      ))
-                                    }
-                                    {/* Add more subcategories for other main categories */}
-                                  </SelectGroup>
-                                </SelectContent>
-                              </Select>
-                            )}
-                            <div className="flex">
-                              {
-                                tempSubCategory.map((subcategory:string, index:number)=>{
-                                  return <span className='bg-slate-300 text-slate-800 rounded-xl p-1 text-sm flex mr-1 mt-3' key={index}>{subcategory} <span onClick={()=>{delSubCategories(subcategory)}} className="mt-[0.27rem] ml-1 cursor-pointer text-slate-800 hover:text-slate-900"><LuXCircle /></span></span>
-                                })
-                              }
-                            </div>
-                            </div>
-                            {/* */}
-                            <div className="text-[12px] opacity-70 mt-[0.45rem]">This is the category, you can choose multiple categories for your Question.</div>
-                          </div>
-                          {/* DateOfEvent */}
-                          <FormField
-                              control={form.control}
-                              name="dateOfEvent"
-                              render={({ field }) => (
-                                <FormItem className="flex flex-col">
-                                  <FormLabel>Date of Event</FormLabel>
-                                  <Popover>
-                                    <PopoverTrigger asChild>
-                                      <FormControl>
-                                        <Button
-                                          variant={"outline"}
-                                          className={cn(
-                                            "w-[240px] pl-3 text-left font-normal",
-                                            !field.value && "text-muted-foreground"
-                                          )}
-                                        >
-                                          {field.value ? (
-                                            format(field.value, "PPP")
-                                          ) : (
-                                            <span>Pick a date</span>
-                                          )}
-                                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                                        </Button>
-                                      </FormControl>
-                                    </PopoverTrigger>
-                                    <PopoverContent className="w-auto p-0" align="start">
-                                      <Calendar
-                                        mode="single"
-                                        selected={field.value}
-                                        onSelect={field.onChange}
-                                        // disabled={(date) =>
-                                        //   date > new Date() || date < new Date("1900-01-01")
-                                        // }
-                                        initialFocus
-                                      />
-                                    </PopoverContent>
-                                  </Popover>
-                                  {/* <FormDescription>
-                                    This is the date of the event.
-                                  </FormDescription> */}
-                                  <FormMessage />
-                                </FormItem>
-                              )}
-                            />
-
-                          {/* Location of the Event */}
-                          <FormField
-                          control={form.control}
-                          name="locationOfEvent"
-                          render = {({field}) => (
-                            <FormItem>
-                              <FormLabel>Location of Event</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Location of the Event ..." {...field}/>
-                              </FormControl>
-                              {/* <div className="text-[12px] opacity-70">This is the location of the event.</div> */}
-                              <FormMessage/>
-                            </FormItem>
-                          )}
-                          />
-
-                          <FormField
-                          control={form.control}
-                          name="durationOfEvent"
-                          render={({field}) => (
-                            <FormItem>
-                              <FormLabel>Duration of the Event</FormLabel>
-                              <FormControl>
-                                <Input type="number" placeholder="Duration of the Event" {...field}
-                                min={1}
-                                max={24}
-                                onChange={(e) => {
-                                  form.setValue('durationOfEvent', parseInt(e.target.value))
-                                }}
-                                />
-                              </FormControl>
-                              {/* <div className="text-[12px] opacity-70">This is the duration of the event.</div> */}
-                              <FormMessage/>
-                            </FormItem>
-                          )}
-                          />
-
-                          <FormField
-                          control={form.control}
-                          name="registrationLink"
-                          render = {({field}) => (
-                            <FormItem>
-                              <FormLabel>Registration Link</FormLabel>
-                              <FormControl>
-                                <Input placeholder="Registration Link ..." {...field}/>
-                              </FormControl>
-                              {/* <div className="text-[12px] opacity-70">This is the registration link for the event.</div> */}
-                              <FormMessage/>
-                            </FormItem>
-                          )}
-                          />
-
-                          {/* //spnosors section */}
-                          <FormField
-                          control={form.control}
-                          name="sponsors"
-                          render={({field}) => (
-                            <FormItem>
-                              <FormLabel>Sponsors</FormLabel>
-                              <FormControl>
-                                <div className=" flex gap-2">
-                                <Input
-                                  placeholder="Sponsors"
-                                  value={sponsorInput}
-                                  onChange={(e) => setSponsorInput(e.target.value)}
-                                  onKeyPress={(e) => {
-                                    if (e.key === 'Enter') {
-                                      setSponsors((prev) => [...prev, sponsorInput]);
-                                      setSponsorInput('');
-                                    }
-                                  }}
-                                />
-                                <Button
-                                type="button"
-                                onClick={() => {
-                                  setSponsors((prev) => [...prev, sponsorInput]);
-                                  setSponsorInput('');
-                                }}
-                                >Add</Button>
-                                </div>
-                              </FormControl>
-
-                             <div className=" flex">
-                              {sponsors.map((sponsor, index) => (
-                                <div key={index} className=" flex gap-1 p-2 rounded-3xl bg-[#F6F6F7]">
-                                  <p>{sponsor}</p>
-                                  <button type="button" onClick={() => {
-                                    const newSponsors = [...sponsors];
-                                    newSponsors.splice(index, 1);
-                                    setSponsors(newSponsors);
-                                  }}>
-                                    <X/>
-                                  </button>
-                                </div>
-                              ))}
-                              </div>
-
-                              <div className="text-[12px] opacity-70">Add sponsors for the event.</div>
-                              <FormMessage/>
-                            </FormItem>
-                          )}
-                          />
-                          
-
-                          <DialogClose asChild>
-                              <Button type="submit" 
-                                className=" w-full"
-                                // disabled={isGuest === 'true'}
-                              >
-                                Post
-                              </Button>
-                          </DialogClose>
-                            
-                          
-
-                        </form>
-                      </Form>
-                      </div>
-
-                      {/* <div>
-                        <input type="file" onChange={(event) => {
-                          if(event.target.files) {
-                            setImageUpload(event.target.files[0]);
-                          }
-                        }}/>
-                        <Button onClick={uploadImage}>Upload Image</Button>
-                        <Progress value={progress} className=" w-[70%]"/>
-                      </div> */}
-
-                    
-                  </DialogContent>
-              </Dialog>
+      <div className="w-full font-jakarta">
+      <Image
+              src={BImage}
+              alt="BannerImage"
+              width={1800}
+              height={1000}
+              className={cn(
+                "h-full w-full object-cover",
+              )}
+            />
+            <h1 className="lg:top-[18.5rem] top-[6rem] left-[1rem] font-jakarta eventSubHeading lg:left-[12rem] absolute text-[27px] lg:text-[30px] font-[700] italic text-pink-500">Find Your Next Experience</h1>
+            <h1 className="lg:top-[22rem] lg:left-[12rem] top-[9rem] font-jakarta left-[1rem] eventHeading absolute [text-shadow:_0_1px_0_rgb(0_0_0_/_40%)] text-[35px] leading-9 lg:text-[55px] font-[800] lg:w-[60rem] lg:leading-[50px] text-white">Discover & Promote Upcoming Event</h1>
+            <div className="hidden lg:block h-[5rem] top-[34rem] w-[65rem] bg-white absolute left-[12rem] rounded-2xl">
+            <div className="search-box absolute top-[11.5px] left-[1rem]">
               
-            </div>
-                      </div>
-                    </div>
-                    <TabsContent
-                      value="Webinar"
-                      className="border-none p-0 outline-none"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="space-y-1">
-                          <h2 className="text-xl font-[500] tracking-tight">
-                            Online Events
-                          </h2>
-                          <p className="text-[18px] text-muted-foreground">
-                          List of upcoming online conferences in medical domain.
-                          </p>
-                        </div>
-                      </div>
-                      <Separator className="my-4" />
-
-                      <div className="flex flex-col">
-                          <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-[1rem] pb-4">
-                            {searchResult && searchResult.length > 0 ?(
-                              searchResult.map((hit: any) => {
-                                const post = transformHitToPost(hit);
-                                return (
-                                  <div key={post.id} className="mb-1">
-                                    <AlbumArtwork
-                                      post={post}
-                                    />
-                                  </div>
-                                );
-                              })
-                            ):(
-                              posts.map((post, index) => (
-                                <div key={index} className="mb-1 mx-auto md:mx-0">
-                              <AlbumArtwork
-                                post={post}
-                              />
-                              </div>
-                            ))
-                        
-                            )
-                            }
-
-                            
-                          </div>
-                          <div className="mb-5">
-                            <div className='w-[100]'>
-                            { isLoading?<Loader/>:pageLoaded&&
-                            <div ref={loadMoreButtonRef} className='mt-4'>
-                              <button onClick={loadMoreData}></button>
-                            </div>
-                            }
-                            </div>
-                          <div className="w-full text-center mt-0">{!isLoading&&!morePosts&&<div>No more Posts...</div>}</div>
-                          </div>
-                      </div>
-
-                    </TabsContent>
-                    <TabsContent
-                      value="Offline"
-                      className="h-full flex-col border-none p-0 data-[state=active]:flex"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="space-y-1">
-                          <h2 className="text-xl font-semibold tracking-tight">
-                            Offline Events
-                          </h2>
-                          <p className="text-sm text-muted-foreground">
-                          List of upcoming offline events in medical domain.
-                          </p>
-                        </div>
-                      </div>
-                      <Separator className="my-4" />
-
-                      <div className="flex flex-col">
-                          <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-[1rem] pb-4">
-                            {searchResult && searchResult.length > 0 ?(
-                              searchResult.map((hit: any) => {
-                                const post = transformHitToPost(hit);
-                                return (
-                                  <div key={post.id} className="mb-1">
-                                    <AlbumArtwork
-                                      post={post}
-                                    />
-                                  </div>
-                                );
-                              })
-                            ):(
-                              posts.map((post, index) => (
-                                <div key={index} className="mb-1 mx-auto md:mx-0">
-                              <AlbumArtwork
-                                post={post}
-                              />
-                              </div>
-                            ))
-                        
-                            )
-                            }
-
-                            
-                          </div>
-                          <div className="mb-5">
-                            <div className='w-[100]'>
-                            { isLoading?<Loader/>:pageLoaded&&
-                            <div ref={loadMoreButtonRef} className='mt-4'>
-                              <button onClick={loadMoreData}></button>
-                            </div>
-                            }
-                            </div>
-                          <div className="w-full text-center mt-0">{!isLoading&&!morePosts&&<div>No more Posts...</div>}</div>
-                          </div>
-                      </div>
-                    </TabsContent>
-                  </Tabs>
-                </div>
-              </div>
-            </div>
-          </div>
+          {/* <Input className=" pl-10 w-[40rem]" placeholder="Search" /> */}
+          <input type="text" 
+            value={searchTextI}
+            onChange={handleEventSearchText}
+            placeholder="Search Events" 
+            className="peer cursor-pointer relative h-14 w-30 text-black pl-[53px] rounded-2xl bg-white outline-none focus:ml-[0rem] focus:cursor-text focus:border-[#ffffff] transition-all" 
+            onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  dispatch(triggerEventSearch());
+                }
+            }}
+          />
+          <svg xmlns="http://www.w3.org/2000/svg" className={`absolute top-[10px] left-[13px] transition-all h-9 w-7 border-transparent text-black`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
         </div>
-        
+        <div className="absolute mt-[26.5px] left-[16rem]"><Layers3/></div>
+        <div className="absolute top-[11.5px] left-[18rem] w-[12rem] h-[62px] font-[19px]">
+      <form className="max-w-sm mx-auto">
+        <label htmlFor="countries" className="mb-2 text-sm font-medium text-gray-900 dark:text-white hidden">
+          Select an option
+        </label>
+        <select
+          id="countries"
+          className={`mt-[8px] h-full text-slate-400 text-base rounded-lg block w-full p-2.5 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+            selectedCategory ? 'border-none' : ''
+          }`}
+          value={selectedCategory}
+          onChange={handleChangeCat}
+        >
+          <option value="all" selected>
+            Choose a Category
+          </option>
+          <option value="all">All</option>
+          {sidebarCategory &&
+            sidebarCategory.map((categoryD:any, index:any) => (
+              <option key={index} value={categoryD.id}>
+                {categoryD.id.split('|').join('/')}
+              </option>
+            ))}
+        </select>
+      </form>
+    </div>
+    <div className="absolute mt-[26.5px] left-[514px]"><MapPin/></div>
+        <div className="absolute top-[11.5px] left-[546px] w-[12rem] h-[62px] font-[19px]">
+      <form className="max-w-sm mx-auto">
+        <label htmlFor="location" className="mb-2 text-sm font-medium text-gray-900 dark:text-white hidden">
+          Select an option
+        </label>
+        <select
+          id="location"
+          className={`mt-[8px] h-full text-slate-400 text-base rounded-lg block w-full p-2.5 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 ${
+            location ? 'border-none' : ''
+          }`}
+          value={location}
+          onChange={handleLocationChange}
+        >
+          <option value="all" selected>
+            Choose a location
+          </option>
+          <option value="all">World Wide</option>
+          { locations&&
+            locations.map((location:any, index:any) => (
+              <option key={index} value={location}>
+                {location}
+              </option>
+            ))}
+        </select>
+      </form>
+    </div>
+    <div>
+    <svg xmlns="http://www.w3.org/2000/svg" className={`absolute top-[17px] left-[60.5rem] bg-purple-600 p-3 rounded-full transition-all h-[3rem] w-[3rem] border-transparent text-white hover:cursor-pointer`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+        </div>
+            </div>
+      </div>
+      <div className="lg:container lg:max-w-[93.5rem] lg:mx-auto font-dmsans mt-[1rem] lg:mt-[5rem]">
+      <div className="mb-8">
+        <div className="font-[700] text-[32px] text-center text-red-500 italic">Upcoming Events</div>
+        <div className="lg:text-[46px] text-[37px] font-[900] text-center">Featured Events</div>
+      </div>
+      <div className="flex flex-col lg:mx-[9.5rem]">
+                          <div className="grid lg:grid-cols-3 md:grid-cols-3 grid-cols-1 gap-[1rem] pb-4">
+                            {searchResult && searchResult.length > 0 ?(
+                              searchResult.map((hit: any) => {
+                                const post = transformHitToPost(hit);
+                                return (
+                                  <div key={post.id} className="mb-1">
+                                    <AlbumArtwork
+                                      post={post}
+                                    />
+                                  </div>
+                                );
+                              })
+                            ):(
+                              posts.map((post, index) => (
+                                <div key={index} className="mb-3 mx-auto md:mx-0">
+                              <AlbumArtwork
+                                post={post}
+                              />
+                              </div>
+                            ))
+                        
+                            )
+                            }
+
+                            
+                          </div>
+                          <div className="mb-5">
+                            <div className='w-[100]'>
+                            { isLoading?<Loader/>:pageLoaded&&
+                            <div ref={loadMoreButtonRef} className='mt-4'>
+                              <button onClick={loadMoreData}></button>
+                            </div>
+                            }
+                            </div>
+                          <div className="w-full text-center mt-0">{!isLoading&&!morePosts&&<div>No more Posts...</div>}</div>
+                          </div>
+                      </div>
       </div>
     </>
   )

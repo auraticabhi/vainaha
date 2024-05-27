@@ -80,6 +80,9 @@ const config = {
           'login-bg': "url('/authbgnew.jpg')"
       }),
     },
+    fontFamily: {
+      jakarta: ["Plus Jakarta Sans", "sans-serif"],
+    }
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config

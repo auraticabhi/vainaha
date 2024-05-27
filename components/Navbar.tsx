@@ -547,7 +547,7 @@ const clearNotifications = async () => {
         <div>  
         { !hideQueSearch && <div className=" relative ml-[18.1px] ">
           {/* <Input className=" pl-10 w-[40rem]" placeholder="Search" /> */}
-          <input type="text" 
+          {/* <input type="text" 
             value={searchText}
             onChange={handleSearchText} 
             placeholder="Search" 
@@ -558,7 +558,7 @@ const clearNotifications = async () => {
                 }
             }}
           />
-          <Search className=" absolute left-2 top-1/2 transform text-gray-400 -translate-y-1/2 h-4 w-4" />
+          <Search className=" absolute left-2 top-1/2 transform text-gray-400 -translate-y-1/2 h-4 w-4" /> */}
         </div>
         }
 
@@ -566,7 +566,7 @@ const clearNotifications = async () => {
 
         { hideQueSearch && <div className=" relative">
           {/* <Input className=" pl-10 w-[40rem]" placeholder="Search" /> */}
-          <input type="text" 
+          {/* <input type="text" 
             value={eventSearchText}
             onChange={handleEventSearchText}
             placeholder="Search Events" 
@@ -579,7 +579,7 @@ const clearNotifications = async () => {
           />
           <svg xmlns="http://www.w3.org/2000/svg" className={`absolute inset-y-0 my-auto ml-[49.5rem] transition-all h-14 w-12 border-transparent stroke-[#ffffff] px-3.5 peer-focus:ml-[0rem] peer-focus:border-[#ffffff] peer-focus:stroke-[#ffffff]`} fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
+        </svg> */}
         </div>
         }
         </div>

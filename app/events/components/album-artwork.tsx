@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { Bookmark, PlusCircleIcon } from "lucide-react"
+import { Bookmark, CalendarDays, PlusCircleIcon } from "lucide-react"
 import FImage from "../../../public/alexandre-pellaes-6vAjp0pscX0-unsplash.jpg"
 
 import parse from "html-react-parser";
@@ -146,12 +146,11 @@ export function AlbumArtwork({ post, isProfile = false, handleDelete = () => {} 
 
 
   return (
-    <div className="dark:bg-[#262626] shadow-[0px_0px_0px_1px_rgba(8,112,184,0.06),0px_1px_1px_-0.5px_rgba(8,112,184,0.06),0px_3px_3px_-1.5px_rgba(8,112,184,0.06),_0px_6px_6px_-3px_rgba(8,112,184,0.06),0px_12px_12px_-6px_rgba(8,112,184,0.06),0px_24px_24px_-12px_rgba(8,112,184,0.06)] dark:hover:shadow-[#2f2e2e] hover:shadow-[0px_10px_1px_rgba(8,_112,_184,_0),_0_10px_20px_rgba(8,_112,_184,_0.5)] h-[290px] w-[20.9rem] pl-[0.45rem] bg-white rounded-md pt-1 transition-all duration-300">
+    <div className="dark:bg-[#262626] shadow-[0px_0px_0px_1px_rgba(8,112,184,0.06),0px_1px_1px_-0.5px_rgba(8,112,184,0.06),0px_3px_3px_-1.5px_rgba(8,112,184,0.06),_0px_6px_6px_-3px_rgba(8,112,184,0.06),0px_12px_12px_-6px_rgba(8,112,184,0.06),0px_24px_24px_-12px_rgba(8,112,184,0.06)] dark:hover:shadow-[#2f2e2e] hover:shadow-[0px_10px_1px_rgba(8,_112,_184,_0),_0_10px_20px_rgba(8,_112,_184,_0.5)] h-[25.5rem] w-[22rem] bg-white rounded-lg transition-all duration-300">
     <div className="lg:w-[18.5rem] w-[full] lg:h-[8.1rem] h-[7.7rem]">
       <ContextMenu>
         <ContextMenuTrigger>
-          <div className="overflow-hidden rounded-md relative h-[12rem] w-[20rem]">
-            {
+          <div className="overflow-hidden rounded-t-lg relative h-[11.5rem] w-[22rem]">            {
             post.eventImageURL== null ?    
             <Image
               src={FImage}
@@ -183,15 +182,15 @@ export function AlbumArtwork({ post, isProfile = false, handleDelete = () => {} 
               })}
             />{" "}
             {savedState ? (
-              <span className=" sm:block hidden font-dmsans"></span>
+              <span className=" sm:block hidden"></span>
             ) : (
-              <span className=" sm:block hidden font-dmsans"></span>
+              <span className=" sm:block hidden"></span>
             )}
           </button>
           </div>
-          <div className="absolute bottom-[0.5rem] left-[0.5rem] z-10">
+          {/* <div className="absolute bottom-[0.5rem] left-[0.5rem] z-10">
           {dateString && <div className="mt-[0.30rem] text-[14px] text-white font-[500]">{dateString}</div>}
-          </div>
+          </div> */}
           <div className="absolute bottom-[0.4rem] left-[0.3rem] opacity-50">
           <div className="mt-[0.30rem] h-[1.5rem] w-[98px] bg-black rounded-md z-0"></div>
           </div>
@@ -215,13 +214,20 @@ export function AlbumArtwork({ post, isProfile = false, handleDelete = () => {} 
       </ContextMenu>
       <div className="mt-3 text-sm">
       <Link href={`/event-details/${encodeURIComponent(post?.title?.split(" ").join("-"))}`}>
-        <h3 className="text-[18px] font-[500] leading-none capitalize">{post.title.length>35?post.title.substring(0, 34)+"...":post.title}</h3>
+        <h3 className="text-[20px] font-[700] leading-none ml-6 mt-6">{post.title.length>28?post.title.substring(0, 27)+"...":post.title}</h3>
       </Link>  
       {/* <div className="mt-[0.30rem] text-[14px] font-semibold opacity-85">{post.locationOfEvent}</div> */}
-      <div className="hidden lg:block">
+      <div className="lg:block">
         {
-        <p className="mt-[0.30rem] font-[400] overflow-hidden opacity-85 line-clamp-2 text-[18px]">{parse(`${post.description.length>90?post.description.substring(0, 89)+"...":post.description}`)}</p>
+        <div className="m-6 text-[14px] text-gray-500 font-[500] flex gap-[25px]"><span className="text-black w-2 mt-[1.5px]"><CalendarDays className="text-xs w-4 h-4"/></span>{dateString}</div>
 }
+        </div>
+        <div className="flex mx-6 mb-6">
+          <div>
+            <div className="text-[16px] font-[500] w-[8rem]">Organized By</div>
+            <div className="text-[16px] font-[700] text-red-500">{post.name}</div>
+          </div>
+          <div className="ml-[73px] font-[700]"><Button className="bg-white hover:text-white text-[#311b92] border-[#311b92] border-2 font-[700]"><div className="font-[700]">BUY NOW</div></Button></div>
         </div>
       </div>
     </div>

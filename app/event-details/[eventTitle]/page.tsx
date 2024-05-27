@@ -52,7 +52,7 @@ import { get } from 'http';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import EventCommentPost from '@/components/eventDetailsPage/eventCommentPost';
 import Emage from "../../../public/alexandre-pellaes-6vAjp0pscX0-unsplash.jpg"
-
+import PImage from "../../../public/guest-user.webp"
 
 
 type Props = {
@@ -323,23 +323,23 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
 
 
   return (
-    <div className=' grid md:grid-cols-2 lg:grid-cols-7 gap-y-4 md:gap-x-4 pb-6 font-dmsans mt-3'>
-        <div className=' md:col-span-5 col-span-2 order-first  '>
+    <div className=' grid md:grid-cols-2 lg:grid-cols-9 gap-y-4 md:gap-x-6 pb-6 font-jakarta mt-3'>
+        <div className=' md:col-span-6 col-span-2 order-first  '>
 
-          <div className=' w-full  bg-white dark:bg-[#262626] rounded-2xl shadow-[0px_0px_0px_1px_rgba(8,112,184,0.06),0px_1px_1px_-0.5px_rgba(8,112,184,0.06),0px_3px_3px_-1.5px_rgba(8,112,184,0.06),_0px_6px_6px_-3px_rgba(8,112,184,0.06),0px_12px_12px_-6px_rgba(8,112,184,0.06),0px_24px_24px_-12px_rgba(8,112,184,0.06) break-words overflow-hidden mt-1 font-dmsans p-4'>
+          <div className=' w-full  bg-white dark:bg-[#262626] rounded-2xl shadow-[0px_0px_0px_1px_rgba(8,112,184,0.06),0px_1px_1px_-0.5px_rgba(8,112,184,0.06),0px_3px_3px_-1.5px_rgba(8,112,184,0.06),_0px_6px_6px_-3px_rgba(8,112,184,0.06),0px_12px_12px_-6px_rgba(8,112,184,0.06),0px_24px_24px_-12px_rgba(8,112,184,0.06) break-words overflow-hidden lg:mt-[4rem] font-dmsans p-10'>
             <div className=''>
-                <div>
+                <div className=''>
                   {
                     eventObject.eventImageURL ? 
-                    <Image src={eventObject.eventImageURL} width={1920} height={1080} alt='Conference' />
+                    <Image src={eventObject.eventImageURL} width={1920} height={1080} alt='Conference' className='rounded-2xl' />
                     :
-                    <Image src={Emage} width={1920} height={1080} alt='Conference' />
+                    <Image alt='conftempimage' src={Emage} />
 
                   }
                 </div>
                 <div className=' max-w-[70%]'>
                     <div className='p-4 space-y-7'>
-                        <h1 className='text-[30px] font-[500] capitalize'>{eventObject.title}</h1>
+                        <h1 className='text-[25px] font-[600] font-jakarta text-[#311b92]'>{eventObject.title}</h1>
                     </div>
                 </div>
             </div>
@@ -371,18 +371,18 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
             <div className='md:flex gap-10 md:justify-between flex-row border border-[#d3d3d3] rounded-md m-4'>
 
             <div className=' p-4 space-y-3 mt-3'>
-                <h1 className=' font-[500] text-[20px]'>Date and Time</h1>
+                <h1 className=' font-[500] text-[12px] text-[#311b92]'>Date and Time</h1>
                 <div className=' flex gap-3'>
-                    <CalendarCheck2 size={24} />
-                    {dateString && <p className=' font-[400] text-gray-900 text-[17px]'>{dateString}</p>}
+                    <CalendarCheck2 size={19} />
+                    {dateString && <p className=' font-[400] text-gray-900 text-[12px]'>{dateString}</p>}
                 </div>
             </div>
 
             <div className="mb-4">
-            <h1 className=' font-[500] text-[20px] px-4 my-3 lg:mt-6'>Location</h1>
+            <h1 className=' font-[500] text-[12px] px-4 my-3 lg:mt-6 text-[#311b92]'>Location</h1>
             <div className=' px-4 flex gap-x-5'>
                 <div className=' mt-2'>
-                    <MapPin size={24} />
+                    <MapPin size={19} />
                 </div>
                 <div className=' flex-col gap-y-3'>
                       {
@@ -391,37 +391,37 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
                           const [location, landmark] = eventObject.locationOfEvent.split(', ');
                           return (
                             <>
-                              <p className=' font-[500] text-[17px]'>{location}</p>
-                              <p className=' text-[16px]'>{landmark}</p>
+                              <p className=' font-[500] text-[12px]'>{location}</p>
+                              <p className=' text-[12px]'>{landmark}</p>
                             </>
                           )
                         })()
                       }
                     <div className=' flex gap-1'>
-                        <p className=' text-[17px] font-[500] text-blue-400 hover:underline cursor-pointer'>Show Map</p>
-                        <ChevronDown className='text-blue-400' size={24} />
+                        <p className=' text-[12px] font-[500] text-black hover:underline cursor-pointer'>Show Map</p>
+                        <ChevronDown className='text-blue-400' size={19} />
                     </div>
                 </div>
             </div>
             </div>
 
             <div className='mb-6'>
-              <h1 className='font-[500] px-4 my-3 mt-6 text-[20px]'>Duration of the event</h1>
-              <div className='px-4 flex gap-2 text-[17px]'><span><Clock/></span><div>{eventObject.durationOfEvent} hours</div></div>
+              <h1 className='font-[500] px-4 my-3 mt-6 text-[12px] text-[#311b92]'>Duration of the event</h1>
+              <div className='px-4 flex gap-2 text-[12px]'><span><Clock className='h-5 w-5' /></span><div className='mt-[2px]'>{eventObject.durationOfEvent} hours</div></div>
               
             </div>
 
             </div>
 
             <div className='p-4 mt-5'>
-              <div className=' flex gap-4 border border-[#d3d3d3] rounded-2xl bg-gray-300 p-2'>
+              <div className=' flex gap-4 border border-black rounded-2xl bg-gray-300 p-2'>
                 <div className=' text-[20px] font-[500]'>Registration Link :</div>
                 <a target='_blank' href="#" className=' text-blue-400 underline cursor-pointer text-[20px]'>{eventObject.registrationLink}</a>
               </div>
             </div>
 
             <div className=' p-4 mt-1'>
-            <h1 className=' font-[500] text-[20px] mb-4 '>Description</h1>
+            <h1 className=' font-[500] text-[20px] mb-4 text-[#311b92]'>Description</h1>
             <div className=' font-medium my-3 mt-6'>
                   <div className=''>
                       <p className=' text-[17px] font-[400]'>{eventObject.description && parse(eventObject.description)}</p>
@@ -429,7 +429,7 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
             </div>
             </div>
 
-            <div className='rounded-md p-4'>
+            {/* <div className='rounded-md p-4'>
   <table className='border border-[#d3d3d3] border-collapse w-full rounded-md'>
     <thead>
       <tr>
@@ -440,15 +440,15 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
     <tbody>
       <tr>
         <td className='border text-[17px] border-[#d3d3d3]'>Pre-Conference Date :</td>
-        <td className='text-blue-400 text-[17px] underline cursor-pointer border border-[#d3d3d3]'>{eventObject.preConferenceDate}</td>
-        </tr> {/*   eventObject.preConferenceDate.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) */}
+        <td className='text-blue-400 text-[17px] underline cursor-pointer border border-[#d3d3d3]'>{eventObject.preConferenceDate && eventObject.preConferenceDate.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
+      </tr>
       <tr>
         <td className='border text-[17px] border-[#d3d3d3]'>Registration Start Date :</td>
-        <td className='text-blue-400 text-[17px] underline cursor-pointer border border-[#d3d3d3]'>{eventObject.registrationStartDate}</td>
+        <td className='text-blue-400 text-[17px] underline cursor-pointer border border-[#d3d3d3]'>{eventObject.registrationStartDate && eventObject.registrationStartDate.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
       </tr>
       <tr>
         <td className='border text-[17px] border-[#d3d3d3]'>Registration End Date :</td>
-        <td className='text-blue-400 text-[17px] underline cursor-pointer border border-[#d3d3d3]'>{eventObject.registrationEndDate}</td>
+        <td className='text-blue-400 text-[17px] underline cursor-pointer border border-[#d3d3d3]'>{eventObject.registrationEndDate && eventObject.registrationEndDate.toDate().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</td>
       </tr>
       <tr>
         <td className='border text-[17px] border-[#d3d3d3]'>Early Bird Registration Fee :</td>
@@ -464,7 +464,7 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
       </tr>
     </tbody>
   </table>
-</div>
+</div> */}
 
 
             <div className=' p-4 mb-5 mt-2'>
@@ -487,9 +487,9 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
 
             </div>
 
-            <div className="top-0 h-fit">
+            <div className="h-fit">
 
-        <div className='mt-1 lg:hidden col-span-2 sticky overflow-hidden h-fit rounded-2xl border border-gray-300 shadow-[0px_0px_0px_1px_rgba(8,112,184,0.06),0px_1px_1px_-0.5px_rgba(8,112,184,0.06),0px_3px_3px_-1.5px_rgba(8,112,184,0.06),_0px_6px_6px_-3px_rgba(8,112,184,0.06),0px_12px_12px_-6px_rgba(8,112,184,0.06),0px_24px_24px_-12px_rgba(8,112,184,0.06)]'>
+        <div className='lg:hidden col-span-3 sticky overflow-hidden h-fit rounded-2xl border border-gray-300 shadow-[0px_0px_0px_1px_rgba(8,112,184,0.06),0px_1px_1px_-0.5px_rgba(8,112,184,0.06),0px_3px_3px_-1.5px_rgba(8,112,184,0.06),_0px_6px_6px_-3px_rgba(8,112,184,0.06),0px_12px_12px_-6px_rgba(8,112,184,0.06),0px_24px_24px_-12px_rgba(8,112,184,0.06)]'>
         <Card x-chunk="dashboard-01-chunk-5">
             <CardHeader>
               <CardTitle className='text-[24px] font-[500]'>Created By</CardTitle>
@@ -660,7 +660,20 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
 
        <div className="w-[21.3rem] top-0 h-fit md:hidden lg:block">
 
-        <div className='mt-1 sm:block hidden col-span-2 sticky overflow-hidden h-fit rounded-2xl border border-gray-300'>
+       <div className='mt-[4rem] sm:block hidden col-span-2 sticky overflow-hidden h-fit rounded-2xl border border-gray-300'>
+          <Card x-chunk="dashboard-01-chunk-5">
+              <CardContent className="mt-[1.5rem]">
+                <div className='text-[18px]'><span className='font-[700] mr-[1rem]'>Pre-Conference Date :</span><span>{eventObject.preConferenceDate}</span></div>
+                <div className='text-[18px]'><span className='font-[700]  mr-[1rem]'>Registration Start Date :</span><span>{eventObject.registrationStartDate}</span></div>
+                <div className='text-[18px]'><span className='font-[700]  mr-[1rem]'>Registration End Date :</span><span>{eventObject.registrationEndDate}</span></div>
+                <div className='text-[18px]'><span className='font-[700] mr-[1rem]'>Early Bird Registration Fee :</span><span>{eventObject.earlyBirdRegistrationFee}</span></div>
+                <div className='text-[18px]'><span className='font-[700]  mr-[1rem]' >Late Registration Fee :</span><span>{eventObject.lateRegistrationFee}</span></div>
+                <div className='text-[18px]'><span className='font-[700]  mr-[1rem]'>Contact Number :</span><span>{eventObject.contactNumber}</span></div>
+              </CardContent>
+          </Card>
+        </div>
+
+        <div className='mt-3 sm:block hidden col-span-2 sticky overflow-hidden h-fit rounded-2xl border border-gray-300'>
         <Card x-chunk="dashboard-01-chunk-5">
             <CardHeader>
               <CardTitle className='text-[24px] font-[500]'>Created By</CardTitle>
@@ -671,7 +684,7 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
             <div className="flex mb-1">
               <div>
             <Image
-                        src={userData.profilePic}
+                        src={userData.profilePic?userData.profilePic:PImage}
                         width={250}
                         height={250}
                         alt='Conference'
@@ -679,8 +692,8 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
                         />
             </div>  
           <div className="ml-4 space-y-1">
-          <p className="text-[17px] font-medium leading-none">{userData.name}</p>
-            <p className="text-[17px] text-muted-foreground">{userData.email}</p>
+          <p className="text-[17px] font-medium leading-none">{userData.name?userData.name:"Guest"}</p>
+            <p className="text-[17px] text-muted-foreground">{userData.email?userData.email:"na"}</p>
           </div>
           <div className="ml-auto font-medium"></div>
         </div>
@@ -711,7 +724,7 @@ const EventDetailsPage = ({ params: { eventTitle } }: Props) => {
                 <div className='text-xs text-muted-foreground'>Few events comes with Govt. recognized credits. <span className='text-black'>Check Info*</span></div>
               </CardHeader>
               <CardContent className="">
-                <h1 className=' text-[30px] flex items-center justify-center mx-auto'>
+                <h1 className=' text-[30px] flex items-center justify-center mx-auto text-[#311b92]'>
                   {
                     eventObject.creditPoints 
                     ?
